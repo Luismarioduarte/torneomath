@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final del Torneo Matemático Categoría A</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .input-group {
+            margin-top: 20px;
+        }
+        .input-group label {
+            font-size: 18px;
+        }
+        .input-group input {
+            font-size: 18px;
+            padding: 10px;
+            width: 200px;
+        }
+        .btn {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Final del Torneo Matemático Categoría A</h1>
+        <h2>Colegio Cristiano Fuente de Vida</h2>
+        <img id="fase-imagen" src="p1.jpg" alt="Imagen Fase">
+        <div class="input-group">
+            <label for="respuesta">Ingresa la respuesta correcta:</label><br>
+            <input type="text" id="respuesta" placeholder="Tu respuesta">
+        </div>
+        <button class="btn" onclick="verificarRespuesta()">Verificar</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        const imagenes = ["p1.jpg", "p2.jpg", "p3.jpg", "p4.jpg", "p5.jpg", "p6.jpg", "p7.jpg", "p8.jpg", "p9.jpg", "p10.jpg"];
+        const numerosCorrectos = [36, 17, 3.7, 4900, 90, 79000, 240, 4, 26, 7];
+        let faseActual = 0;
+
+        function mostrarFase() {
+            // Cambia la imagen
+            const imgElement = document.getElementById('fase-imagen');
+            imgElement.src = imagenes[faseActual];
+
+            // Limpia el mensaje y la respuesta
+            document.getElementById('respuesta').value = '';
+            document.getElementById('message').innerText = '';
+        }
+
+        function verificarRespuesta() {
+            const respuestaUsuario = parseFloat(document.getElementById('respuesta').value);
+
+            if (isNaN(respuestaUsuario)) {
+                document.getElementById('message').innerText = 'Por favor, ingresa un número válido.';
+                return;
+            }
+
+            if (respuestaUsuario === numerosCorrectos[faseActual]) {
+                if (faseActual < imagenes.length - 1) {
+                    faseActual++;
+                    mostrarFase();
+                } else {
+                    document.getElementById('message').innerText = '¡Has completado todas las fases correctamente y eres el ganador!';
+                    // Bloquea el botón después de completar todas las fases
+                    document.querySelector('.btn').disabled = true;
+                }
+            } else {
+                document.getElementById('message').innerText = 'Número incorrecto, inténtalo de nuevo.';
+            }
+        }
+
+        // Inicializa la primera fase
+        mostrarFase();
+    </script>
+</body>
+</html>
